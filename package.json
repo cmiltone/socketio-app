@@ -1,0 +1,23 @@
+{
+  "name": "socketio-app",
+  "version": "1.0.0",
+  "description": "A simple basic Socket.IO push notification test App",
+  "main": "index.html",
+  "scripts": {
+    "start": "node app.js",
+    "start-express": "node app-express.js"
+  },
+  "keywords": [
+    "socket.io",
+    "Push",
+    "Notifications"
+  ],
+  "author": "castromiltone",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "socket.io": "^2.0.4"
+  }
+}

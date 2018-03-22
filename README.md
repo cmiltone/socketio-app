@@ -19,7 +19,7 @@ npm run start-express
 
 - The server(via the socket) emits (or sends out) notifcations.
 
-- The subscriber(or the client browser, in the case of this app) gets the notification when they connect to the socket, the client can also send back data after some logic is done
+- The subscriber(the client browser, in the case of this app) gets the notification when they connect to the socket, the client can also send back data after some logic is done
 
 ## Examples
 

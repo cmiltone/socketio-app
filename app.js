@@ -1,27 +1,30 @@
-/* SERVER Side - nodejs http server*/
-var app = require('http').createServer(handler);
-var io = require('socket.io')(app);
-var fs = require('fs');
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
-console.log('listening at port localhost:' + 80);
-app.listen(80);
+const redis = require('redis');
+const url = 'localhost:6379';
 
-function handler (req, res) {
-  fs.readFile(__dirname + '/index.html',
-  	function (err, data) {
-      if (err) {
-        res.writeHead(500);
-        return res.end('Error loading index.html');
-      }
-      res.writeHead(200);
-      res.end(data);
-  	
-  	});
-}
+// const client1 = redis.createClient();
+// const client2 = redis.createClient();
 
-io.on('connection', function (socket) {
-  socket.emit('update', {version: 1.0, description: 'feature f one bugfix'});
-  socket.on('activate', function (data) {
-  	console.log(data);
-  });
+// const routes = require('./routes');
+// client1.on('message', (channel, messgae) => {
+//   client2.hgetall(messgae, (error, response) =>{
+//     // response.key = messgae;
+//     console.log('sending out msg', messgae, response, error);
+//     io.sockets.emit('message', messgae);
+//   })
+// });
+
+// client1.subscribe('chatMessages');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/', express.static('www'));
+
+http.listen(8000, () => {
+  console.log('Listening on *:8000');
 });

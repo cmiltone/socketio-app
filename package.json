@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "node app.js",
+    "sb": "node backend.js",
     "start-express": "node app-express.js"
   },
   "keywords": [
@@ -15,9 +16,12 @@
   "author": "castromiltone",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.5.2",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "http": "0.0.0",
-    "socket.io": "^2.0.4"
+    "redis": "^2.8.0",
+    "socket.io": "^2.0.4",
+    "socket.io-redis": "^5.2.0"
   }
 }

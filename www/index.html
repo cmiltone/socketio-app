@@ -1,0 +1,94 @@
+<!-- CLIENT Side -->
+<html>
+	<title>Cleint Side</title>
+	<style>
+		body {
+			background-color: azure;
+		}
+		.main-container {
+			display: block;
+		}
+		.message-list {
+			border-radius: 8px;
+			border: 1px solid #ccc;
+		}
+		.message-form {
+			border-radius: 8px;
+			border: 1px solid #ccc;
+			margin: 5px auto;
+			padding: 10px;
+			width: 50%;
+			height: auto;
+			min-height: 300px;
+			background-color: #fff;
+		}
+		.form-group {
+			margin: 5px auto;
+		}
+		.form-control {
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			width: 100%;
+			min-height: 35px;
+			padding: 5px;
+			margin: 5px auto;
+		}
+		.form-header {
+			text-align: center
+		}
+	</style>
+    <body>
+		<div class="main-container">
+			<ul id="message-list" class="message-list"></ul>
+			<div class="message-form">
+			    <h3 class="form-header">Simple Real Time Chat</h3>
+				<div class="form-group">
+				    <input id="sender-name" type="text" placeholder="Enter your name" class="form-control">
+				</div>
+				<div class="form-group">
+				    <textarea id="message-text" placeholder="Enter message text here" rows="3" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+				    <button onclick="sendMessage()">Send Message</button>
+			    </div>
+			</div>
+		</div>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+			var socket = io.connect('http://localhost:8800');
+			
+			function sendMessage() {
+				var message = {
+					sender: document.getElementById('sender-name').value,
+					text: document.getElementById('message-text').value
+				}
+				console.log('sending message=>', message);
+				axios.post('http://localhost:8800/message', message)
+				    .then(response => {
+						console.log('response', response);
+						//renderMessage(message);
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			}
+			function renderMessage(message) {
+				message = JSON.parse(message);
+				console.log('message recevied=>', message);
+				var listPlaceholder = document.getElementById('message-list');
+				var item = document.createElement('li');
+				item.innerHTML = `${message.sender}: ${message.text}`;
+				listPlaceholder.appendChild(item);
+			}
+			
+            socket.on('message', (message) => {
+                renderMessage(message);
+            });
+
+			socket.on('hello', message => {
+				console.log('hello recevied=>', message);
+			});
+        </script>
+    </body>
+</html>
